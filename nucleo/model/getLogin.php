@@ -17,6 +17,7 @@ error_reporting(-1);
             http_response_code(200);
             $res=$query->fetchAll(PDO::FETCH_ASSOC);
             $res[0]['contrasenia']="";
+            $res[0]['esDireccionParaFacturacion'] === 'true'? $res[0]['esDireccionParaFacturacion']=true : false;
             echo json_encode($res[0]); 
         }else if($query->rowCount() == 0){
             http_response_code(400);

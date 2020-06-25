@@ -29,6 +29,40 @@
 			}
             
 		}
+        
+        public function setPedido($email,$contrasenia,$nombre,$apellido,$telefono,$direccion,$numero,$ciudad,$provincia,
+                                                     $pais,$empresa,$cuitCuilDni,$codigoPostal,$esDireccionParaFacturacion)
+        {   
+            $pass= $contrasenia != "" ? ",  contrasenia = '" . md5($contrasenia) ."'" : "";
+            $host= gethostname();
+            if($this->checkDuplicate($host)){
+                $sql2=$this->base->query("UPDATE logincliente SET
+                                                       email = '$email' $pass,
+                                                        nombre = '$nombre', apellido = '$apellido', telefono = '$telefono', 
+                                                        direccion = '$direccion', numero = '$numero', 
+                                                        ciudad = '$ciudad', provincia = '$provincia',
+                                                         pais = '$pais', empresa = '$empresa', 
+                                                         esDireccionParaFacturacion = 'true', hostname = '$host' 
+                                                         WHERE logincliente.hostname = '$host'");
+                return true;
+            }else{
+                $sql=$this->base->query("INSERT INTO logincliente (id,email,contrasenia,nombre,apellido,telefono,direccion,numero,ciudad,provincia,
+                                                                 pais,empresa,cuitCuilDni,codigoPostal,esDireccionParaFacturacion,hostname)
+                                    VALUES (NULL, '$email', '$contrasenia', '$nombre', '$apellido', '$telefono', '$direccion', '$numero',
+                                   '$ciudad', '$provincia', '$pais', '$empresa', '$cuitCuilDni', '$codigoPostal', '$esDireccionParaFacturacion', '$host')");
+                
+            }
+            
+           
+        }
+        
+        function checkDuplicate($host){
+            $sql=$this->base->query("SElECT * FROM logincliente WHERE hostname ='$host'");
+			if($sql->rowCount() == 1){
+			     return true;
+			}
+            
+        }
 		
 	}
 	
