@@ -5,7 +5,7 @@
         
         public $base;
         
-        public function ConectDB(){
+        public function __construct(){
             
             try{
                 
