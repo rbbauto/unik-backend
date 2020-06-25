@@ -42,6 +42,7 @@
                                                         direccion = '$direccion', numero = '$numero', 
                                                         ciudad = '$ciudad', provincia = '$provincia',
                                                          pais = '$pais', empresa = '$empresa', 
+                                                         cuitCuilDni = '$cuitCuilDni', codigoPostal = '$codigoPostal', 
                                                          esDireccionParaFacturacion = 'true', hostname = '$host' 
                                                          WHERE logincliente.hostname = '$host'");
                 return true;
