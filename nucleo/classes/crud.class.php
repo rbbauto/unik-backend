@@ -57,6 +57,26 @@
            
         }
         
+        function addTocart($productos){
+            $last=(count($productos)-1);
+            $host=gethostname();
+            $insert="";
+            foreach($productos as $key => $item)
+            {   
+                $coma=$key != $last ? "," : "";
+                $insert.="(null,$item[id],'$item[nombre]','$host','$item[precio]',$item[cantidad],$item[subtotal])$coma";
+                
+                
+            }
+            $this->base->query("DELETE FROM carrito WHERE hostname = '$host' ");
+            $sql=$this->base->query("INSERT INTO carrito
+                                         (id, id_producto, nombre, hostname, precio, cantidad, subtotal)
+                                          VALUES $insert");
+            if($sql){
+                    return true;
+                }
+        }
+        
         function checkDuplicate($host){
             $sql=$this->base->query("SElECT * FROM logincliente WHERE hostname ='$host'");
 			if($sql->rowCount() == 1){
