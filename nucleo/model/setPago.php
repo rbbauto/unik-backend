@@ -15,20 +15,21 @@ error_reporting(-1);
 		MercadoPago\SDK::setAccessToken('TEST-633745925553658-051611-eb9797460c877042e2cf0920c8d88c06-569072434');
 
 		$items= array();
-		// Crea un array de ítems en la preferencia
+		// Crea un array de ï¿½tems en la preferencia
 		foreach ($data['Productos'] as $producto) 
 		{
 			
 		
         	$items[]= array
-        	(
-           		"title"			=>	$producto['nombre'],
-                "quantity"		=>	$producto['cantidad'],
-                "currency_id"	=>	"ARS",
-                "unit_price"	=>	$producto['precio'],
-                "id"			=>	$producto['id'],
-                "description"	=>	$producto['descripcion'],
-                "picture_url"	=>	$producto['imagen']);
+            	(
+               		"title"			=>	$producto['nombre'],
+                    "quantity"		=>	(int)$producto['cantidad'],
+                    "currency_id"	=>	"ARS",
+                    "unit_price"	=>	(float)$producto['precio'],
+                    "id"			=>	(int)$producto['id'],
+                    "description"	=>	$producto['descripcion'],
+                    "picture_url"	=>	$producto['imagen']
+                );
         	}
 		
          // ...
@@ -36,7 +37,6 @@ error_reporting(-1);
 		  $payer->name = $data['Pedido']['nombre'];
 		  $payer->surname = $data['Pedido']['apellido'];
 		  $payer->email = $data['Pedido']['email'];
-		  //$payer->date_created = "2018-06-02T12:58:41.425-04:00";
 		  $payer->phone = array(
 		    "area_code" => "",
 		    "number" => $data['Pedido']['telefono']
@@ -55,9 +55,9 @@ error_reporting(-1);
 		// Crea un objeto de preferencia
 		$preference = new MercadoPago\Preference();
 		$preference->back_urls = array(
-		    "success" => "localhost/unicasport/cobro.php?checkout=go",
-		    "failure" => "localhost/unicasport/cobro.php?checkout=stp",
-		    "pending" => "localhost/unicasport/cobro.php?checkout=std"
+		    "success" => "localhost/nucleo/model/cobro.php?chkt=go",
+		    "failure" => "localhost/nucleo/model/cobro.php?chkt=stp",
+		    "pending" => "localhost/nucleo/model/cobro.php?chkt=std"
 		);
 		
 
@@ -94,6 +94,7 @@ error_reporting(-1);
 	}
 	 
  ?>
+    
 	<a class="btn btn-success"href="<?php echo $preference->init_point; ?>">Pagar</a> con Mercado Pago
 	
 
